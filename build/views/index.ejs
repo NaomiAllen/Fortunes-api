@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title></title>
-    </head>
-    <body>
-        <h1>Fortune index page</h1>
-        <ul>
-              <li>
-                <form action="/fortunes/<%= fortunes[i].id %>?_method=DELETE" method="POST">
-                    <input type="submit" value="DELETE"/>
-                </form>
-                <a href="/f/<%=fortunes[i].id %>/edit">Edit</a>
-            </li>
-            <% } %>
-        </ul>
-    </body>
+<%-include('./partials/nav.ejs')%>
+<body>
+    <div id= max-height: 50px>
+        <div>
+            <p class="card-text">Welcome to your future!</p>
+        </div>
+    <a href= "/sessions/new"type="submit">Login</a><br>
+    <a href= "users/new" type="button">Sign Up</a> 
+</body>
 </html>

@@ -3,43 +3,36 @@ const router = express.Router();
 
 const Fortune = require('../models/fortunes');
 
-const isAuthenticated = (req, res, next)=>{
-    if (req.session.currentUser){
-        return next();
-    } else {
-        res.redirect('/sessions/new');
-    }
-}
 
 //Routes
 //index
-router.get('/', isAuthenticated, (req,res)=>{
-    Fortune.find({}, (error, allFortunes)=>{
-        res.render('index.ejs',{
-            fortunes: allFortunes,
+router.get('/', (req,res)=>{
+    Fortune.find({}, (error, foundFortunes)=>{
+        res.render('../views/index.ejs', {
+            fortunes: foundFortunes,
             currentUser: req.session.currentUser
         })
     })
 })
 
 //new
-router.get('/new', isAuthenticated, (req,res)=>{
-    res.render('new.ejs',{
+router.get('/new', (req,res)=>{
+    res.render('../views/fortunes/new.ejs',{
         currentUser: req.session.currentUser
     });
 })
 
 //post
-router.post('/', isAuthenticated, (req,res)=>{
+router.post('/', (req,res)=>{
     Fortune.create(req.body, (error, createdFortune)=>{
         res.redirect('/fortunes');
     })
 })
 
 //edit
-router.get('/:id/edit', isAuthenticated, (req,res)=>{
+router.get('/:id/edit', (req,res)=>{
     Fortune.findById(req.params.id, (err, foundFortune)=>{
-        res.render('edit.ejs', {
+        res.render('../views/fortunes/edit.ejs', {
             fortunes: foundFortune,
             currentUser: req.session.currentUser
         })
@@ -47,7 +40,7 @@ router.get('/:id/edit', isAuthenticated, (req,res)=>{
 })
 
 //delete
-router.delete('/:id', isAuthenticated, (req, res)=>{
+router.delete('/:id', (req, res)=>{
     Fortune.findByIdAndRemove(req.params.id, {useFindAndModify: false}, (err,data)=>{
         res.redirect('/fortunes')
     })

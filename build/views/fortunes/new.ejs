@@ -1,0 +1,18 @@
+<%- include('../partials/nav.ejs') %>
+
+        <header>
+			<h1>New Fortune</h1>
+			<nav>
+				<ul>
+					<li>
+						<a href="/">Home</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+        <form action="/fortune" method="POST">
+            Fortune: <input type="text" name="fortune"/><br/>
+            <input type="submit" name="" value="Add fortune to Collection"/>
+        </form>
+    </body>
+</html>
