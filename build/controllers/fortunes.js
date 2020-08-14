@@ -8,36 +8,32 @@ const Fortune = require('../models/fortunes');
 //index
 router.get('/', (req,res)=>{
     Fortune.find({}, (error, foundFortunes)=>{
-        res.render('../views/index.ejs', {
-            fortunes: foundFortunes,
-            currentUser: req.session.currentUser
-        })
-    })
-})
-
-//new
-router.get('/new', (req,res)=>{
-    res.render('../views/fortunes/new.ejs',{
-        currentUser: req.session.currentUser
+        if (error) {
+            res.status(400).json({error: error.message});
+        }
+        res.status(200).json(foundFortunes)
+        });
     });
-})
+
 
 //post
 router.post('/', (req,res)=>{
     Fortune.create(req.body, (error, createdFortune)=>{
-        res.redirect('/fortunes');
+        if(error){
+            res.status(400).json({error: error.message});
+        }
+        res.status(200).send(createdFortune)
     })
 })
 
 //edit
 router.get('/:id/edit', (req,res)=>{
     Fortune.findById(req.params.id, (err, foundFortune)=>{
-        res.render('../views/fortunes/edit.ejs', {
-            fortunes: foundFortune,
+            fortunes: foundFortune
             currentUser: req.session.currentUser
         })
-    })
 })
+
 
 //delete
 router.delete('/:id', (req, res)=>{

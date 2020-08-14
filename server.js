@@ -46,10 +46,8 @@ mongoose.connection.once('open', ()=> {
 
 //fortune controller
 app.use('/fortunes', fortunesController)
-
 //User Controller
 app.use('/users', userController)
-
 //session controller
 app.use('/sessions', sessionsController)
 
