@@ -18,8 +18,10 @@ router.get('/', (req,res)=>{
 
 //post
 router.post('/', (req,res)=>{
+    console.log(req.body)
     Fortune.create(req.body, (error, createdFortune)=>{
         if(error){
+            console.log(error)
             res.status(400).json({error: error.message});
         }
         res.status(200).send(createdFortune)
@@ -27,11 +29,12 @@ router.post('/', (req,res)=>{
 })
 
 //edit
-router.get('/:id/edit', (req,res)=>{
+router.put('/:id', (req,res)=>{
     Fortune.findById(req.params.id, (err, foundFortune)=>{
-            fortunes: foundFortune
-            currentUser: req.session.currentUser
-        })
+        Fortune.findByIdAndUpdate(req.params.id, req.body,{new:true}, (err,updatedModel)=>{
+            res.redirect("/fortunes")
+        })   
+    })
 })
 
 

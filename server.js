@@ -3,20 +3,22 @@ const app = express();
 const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const session = require('express-session')
-const fortunesController = require('./build/controllers/fortunes')
-const userController = require('./build/controllers/users')
-const sessionsController = require('./build/controllers/sessions')
-const Fortune = require('./build/models/fortunes')
+
 
 
 
 require('dotenv').config();
 const PORT = process.env.PORT
+// console.log("console log 1")
+
+
 
 // middleware to help with the form submission
 app.use(express.static('public'));
+app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'))
+// console.log('console log 2')
 
 app.use(
     session({
@@ -26,14 +28,16 @@ app.use(
     })
     )
 
-const isAuthenticated = (req, res, next)=>{
-    if (req.session.currentUser){
-        return next();
-    } else {
-        res.redirect('/sessions/new');
-    }
-}
-app.use('/fortunes', isAuthenticated);
+
+// console.log('console log 3')
+// const isAuthenticated = (req, res, next)=>{
+//     if (req.session.currentUser){
+//         return next();
+//     } else {
+//         res.redirect('/sessions/new');
+//     }
+// }
+// app.use('/fortunes', isAuthenticated);
     
     // mongoose connection logic
 const mongodbURI = process.env.MONGODBURI
@@ -42,27 +46,21 @@ mongoose.connection.once('open', ()=> {
     console.log('connected to mongo');
 });
 
-
+const fortunesController = require('./build/controllers/fortunes')
+const userController = require('./build/controllers/users')
+const sessionsController = require('./build/controllers/sessions')
 
 //fortune controller
+
 app.use('/fortunes', fortunesController)
 //User Controller
+console.log("about to use user controller")
 app.use('/users', userController)
 //session controller
+console.log("about to use session controller")
 app.use('/sessions', sessionsController)
 
 
-// //Put ROUTES here
-app.get('/', (req, res)=>{
-    Fortune.find({}, (err, foundFortune)=>{
-        if (err){console.log(err)}else{
-            res.render('./build/views/index.ejs',{
-                fortune: foundFortune,
-                currentUser: req.session.currentUser,
-            });
-        }
-    })
-});
 
 
 
