@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const session = require('express-session')
+const cors = require('cors')
 
 
 
@@ -18,7 +19,8 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'))
-// console.log('console log 2')
+
+
 
 app.use(
     session({
@@ -27,6 +29,21 @@ app.use(
         saveUninitialized: false
     })
     )
+    
+    const whitelist = ['http://localhost:3000']
+    const corsOptions = {
+        origin: function (origin, callback) {
+            console.log(origin)
+            if (whitelist.indexOf(origin) !== -1) {
+                callback(null, true)
+            } else if(origin == undefined){
+                callback(null, true)
+            }else {
+                callback(new Error('Not allowed by CORS'))
+            }
+        }
+    }
+    app.use(cors(corsOptions))
 
 
 // console.log('console log 3')

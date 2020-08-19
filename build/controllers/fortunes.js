@@ -7,6 +7,7 @@ const Fortune = require('../models/fortunes');
 //Routes
 //index
 router.get('/', (req,res)=>{
+    console.log('hitting get fortunes route')
     Fortune.find({}, (error, foundFortunes)=>{
         if (error) {
             res.status(400).json({error: error.message});
