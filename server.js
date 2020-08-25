@@ -30,7 +30,7 @@ app.use(
     })
     )
     
-    const whitelist = ['http://localhost:3000', 'https://bad-fortunes.herokuapp.com/']
+    const whitelist = ['http://localhost:3000', 'https://bad-fortunes.herokuapp.com']
     const corsOptions = {
         origin: function (origin, callback) {
             console.log(origin)
