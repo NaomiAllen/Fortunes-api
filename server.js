@@ -63,12 +63,12 @@ mongoose.connection.once('open', ()=> {
     console.log('connected to mongo');
 });
 
+const  collectionController = require('./build/controllers/collection')
 const fortunesController = require('./build/controllers/fortunes')
 const userController = require('./build/controllers/users')
 const sessionsController = require('./build/controllers/sessions')
 
 //fortune controller
-
 app.use('/fortunes', fortunesController)
 //User Controller
 console.log("about to use user controller")
@@ -76,6 +76,8 @@ app.use('/users', userController)
 //session controller
 console.log("about to use session controller")
 app.use('/sessions', sessionsController)
+//collection controller
+app.use('/collection', collectionController)
 
 
 
