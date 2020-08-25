@@ -57,7 +57,7 @@ app.use(
 // app.use('/fortunes', isAuthenticated);
     
     // mongoose connection logic
-const mongodbURI = process.env.MONGODBURI
+const mongodbURI = process.env.MONGODB_URI
 mongoose.connect(mongodbURI, { useNewUrlParser: true, useUnifiedTopology: true } );
 mongoose.connection.once('open', ()=> {
     console.log('connected to mongo');
