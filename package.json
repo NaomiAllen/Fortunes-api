@@ -1,6 +1,9 @@
 {
   "name": "fortunes-api",
   "version": "1.0.0",
+  "engines": {
+    "node": "14.3.0"
+  },
   "description": "hellllo",
   "main": "server.js",
   "scripts": {
